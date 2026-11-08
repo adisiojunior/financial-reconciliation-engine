@@ -1,4 +1,4 @@
-# ⚡ Financial Reconciliation & Settlement Engine
+#  Financial Reconciliation & Settlement Engine
 
 [![Java](https://img.shields.io/badge/Java-17-orange.svg?style=flat&logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7%2B-brightgreen.svg?style=flat&logo=springboot)](https://spring.io/projects/spring-boot)
