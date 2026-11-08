@@ -12,7 +12,7 @@ Motor distribuído de conciliação financeira e liquidação assíncrona conceb
 
 ---
 
-## 🏛 Arquitetura do Ecossistema
+##  Arquitetura do Ecossistema
 
 O sistema adota o padrão de desacoplamento assíncrono entre a ingestão das ordens e a conciliação bancária:
 
@@ -59,7 +59,7 @@ O sistema adota o padrão de desacoplamento assíncrono entre a ingestão das or
 
 ---
 
-## 🚀 Destaques Técnicos de Engenharia
+## Destaques Técnicos de Engenharia
 
 * **Prevenção Concorrente Estrita:** 
   Uso combinado de `@Lock(LockModeType.PESSIMISTIC_WRITE)` na leitura da transação para bloqueio ao nível de linha no PostgreSQL e `@Version` para detecção de concorrência otimista.
@@ -95,7 +95,7 @@ O sistema adota o padrão de desacoplamento assíncrono entre a ingestão das or
 
 ---
 
-## 📦 Como Executar o Ecossistema
+## Como Executar o Ecossistema
 
 ### Pré-requisitos
 * [Docker Desktop](https://www.docker.com/) instalado e em execução
@@ -119,7 +119,7 @@ Serviços disponíveis após a inicialização:
 
 ---
 
-## 🧪 Execução da Suíte de Testes
+## Execução da Suíte de Testes
 
 Para executar os testes unitários com Mockito e os testes de integração com contêineres reais via Testcontainers:
 
@@ -130,7 +130,7 @@ Para executar os testes unitários com Mockito e os testes de integração com c
 
 ---
 
-## 🔒 Endpoints Principais da API
+## Endpoints Principais da API
 
 | Método | Endpoint | Descrição | Permissão |
 | :--- | :--- | :--- | :--- |
@@ -141,7 +141,7 @@ Para executar os testes unitários com Mockito e os testes de integração com c
 
 ---
 
-## 👤 Autor
+## Autor
 
 Desenvolvido por **Adísio Pereira Fialho Júnior**.  
 * GitHub: [@adisiojunior](https://github.com/adisiojunior)
