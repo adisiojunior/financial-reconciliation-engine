@@ -1,0 +1,94 @@
+<div class="dashboard-shell">
+  <header class="navbar">
+    <div class="brand">
+
+      <h2>Motor de Liquidação & Auditoria</h2>
+    </div>
+    <div class="auth-pill">
+      <span class="dot"></span> Sessão Segura (JWT RBAC)
+    </div>
+  </header>
+
+  <main class="content-body">
+    <!-- Métricas em Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <span class="label">Liquidadas & Conciliadas</span>
+        <span class="number status-success">{{ countReconciled }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="label">Em Fila / Processando (RabbitMQ)</span>
+        <span class="number status-warn">{{ countPending }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="label">Falhas / Rejeitadas</span>
+        <span class="number status-danger">{{ countFailed }}</span>
+      </div>
+    </section>
+
+    <!-- Formulário Idempotente -->
+    <section class="panel form-panel">
+      <h3>Emitir Nova Transação</h3>
+      <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="form-row">
+        <div class="field">
+          <label>Referência Única</label>
+          <input type="text" formControlName="externalReference" placeholder="Ex: TX-9002" />
+        </div>
+
+        <div class="field">
+          <label>Valor (Montante)</label>
+          <input type="number" step="0.01" formControlName="amount" placeholder="0.00" />
+        </div>
+
+        <div class="field">
+          <label>Moeda</label>
+          <select formControlName="currency">
+            <option value="BRL">BRL (R$)</option>
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+          </select>
+        </div>
+
+        <button type="submit" [disabled]="transactionForm.invalid || isSubmitting" class="action-btn">
+          {{ isSubmitting ? 'Enviando à Fila...' : 'Despachar Transação' }}
+        </button>
+      </form>
+    </section>
+
+    <!-- Tabela de Auditoria com Detecção de Locks -->
+    <section class="panel table-panel">
+      <h3>Audit Trail em Tempo Real (Polling RxJS)</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID Transacional</th>
+              <th>Referência Externa</th>
+              <th>Valor</th>
+              <th>Status do Motor</th>
+              <th>Controle de Concorrência</th>
+              <th>Criada em</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tx of transactions">
+              <td class="mono-id">{{ tx.id }}</td>
+              <td><strong>{{ tx.externalReference }}</strong></td>
+              <td>{{ tx.amount | currency:tx.currency:'symbol':'1.2-2' }}</td>
+              <td>
+                <span class="badge" [ngClass]="'badge-' + tx.status.toLowerCase()">
+                  {{ tx.status }}
+                </span>
+              </td>
+              <td><span class="lock-tag">@Version: {{ tx.version }}</span></td>
+              <td>{{ tx.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+            </tr>
+            <tr *ngIf="transactions.length === 0">
+              <td colspan="6" class="no-records">Nenhum evento registrado no banco de dados.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
